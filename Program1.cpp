@@ -1,17 +1,4 @@
-/**
-    Coding Test
-    Program1.cpp
-    Purpose: Calculates the total of tokens on an 8×8 checkerboard (method a)
-
-    @author Tinhinane Ait Hamouda
-    @version 1.0 21/04/18 
-*/
-
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-#include <sstream>
+#include "include/Program1.h"
 
 using namespace std;
 
@@ -21,18 +8,18 @@ using namespace std;
     @param checkerboard as a vector of doubles.
     @return total number of tokens as a double.
 */
-double method_a(vector<double>& checkerboard){
+float method_a(vector<float>& checkerboard){
 
     checkerboard[0]=1;//Populate the first element of the vector
-    double prev=checkerboard[0];//Save the previous element in the vector
-    double sum=checkerboard[0];//Initialize the total of tokens on the checkerboard
+    float prev=checkerboard[0];//Save the previous element in the vector
+    float sum=checkerboard[0];//Initialize the total of tokens on the checkerboard
     
     /***
     For each element of vector from checkerboard[1] till the end apply the 
     lambda function. The vector stores a geometric sequence, with:
     checkerboard(0)=1 and checkerboard(n+1)=checkerboard(n)*2 
     ***/
-    for_each (checkerboard.begin()+1, checkerboard.end(), [&prev, &sum](double &val){
+    for_each (checkerboard.begin()+1, checkerboard.end(), [&prev, &sum](float &val){
         prev=prev*2;//update val
         val=prev;//populate the vector element
         sum=sum+prev;//calculate the sum up to this point in the vector
@@ -45,8 +32,7 @@ double method_a(vector<double>& checkerboard){
     the checkerboard and doublecheck that it corresponds to the specifications
     ***/
     //display_checkerboard(checkerboard);
-    return sum;
-    
+    return sum;    
 }
 /**
     Encodes the total number of tokens in fixed-point notation 
@@ -54,7 +40,7 @@ double method_a(vector<double>& checkerboard){
     @param sum as a double in scientific-notation.
     @return string representation of the sum in fixed-point notation.
 */
-string to_decimal(const double& sum){
+string to_decimal(const float& sum){
     ostringstream ss;
     ss.precision(1);
     ss << fixed << sum;//write sum value in fixed-point notation.
@@ -67,7 +53,7 @@ string to_decimal(const double& sum){
     @param checkerboard as a vector of doubles.
     @return 
 */
-void display_checkerboard(const vector<double>& checkerboard){  
+void display_checkerboard(const vector<float>& checkerboard){  
     int count=0;
     int row=0;
     while(row < 8){
@@ -81,11 +67,3 @@ void display_checkerboard(const vector<double>& checkerboard){
     cout << flush;
 }
 
-int main(){
-  int size=64;
-  vector<double> checkerboard(size);//Vector of size 64 to represent an 8×8 checkerboard
-  double total = method_a(checkerboard);
-  cout << "The sum is: " << total << " (" << to_decimal(total) << ")" <<endl;
-  //display_checkerboard(checkerboard);
-  return 0;
-}

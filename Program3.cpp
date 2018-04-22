@@ -1,20 +1,6 @@
-/**
-    Coding Test
-    Program3.cpp
-    Purpose: Verify IPv4 addresses (in dotted-decimal notation) validity 
-
-    @author Tinhinane Ait Hamouda
-    @version 1.0 21/04/18 
-*/
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <boost/tokenizer.hpp>
+#include "include/Program3.h"
 
 using namespace std;
-using namespace boost;
 
 /**
     Utility function to check whether a string is a chain of decimal digit 
@@ -91,16 +77,4 @@ bool is_valid_ip(string ip){
             return false;
     }
     return true;
-}
-
-int main(){
-    string ip_address;
-    cout << "Please copy your ip address then press enter " << endl;
-    while (cin >> ip_address)
-    {
-        if(is_valid_ip(ip_address))
-            cout << "Your address is valid" << endl;
-        else
-            cout << "Your address is not valid" << endl;
-    }
 }
