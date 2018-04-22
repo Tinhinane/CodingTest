@@ -81,7 +81,7 @@ void display_checkerboard(const vector<double>& checkerboard){
     cout << flush;
 }
 
-int main() {
+int main(){
   int size=64;
   vector<double> checkerboard(size);//Vector of size 64 to represent an 8×8 checkerboard
   double total = method_a(checkerboard);
