@@ -2,9 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#define ROW 3
-#define COL 5
-#define V 15
+
+const int ROW = 3;
+const int COL = 5;
+const int V = 15;
 
 /**
     Coding Test
@@ -17,5 +18,6 @@
 */
 
 int find_min_distance(int dist[], bool is_visited[]);
-int shortest_path(std::vector<std::vector<int>> matrix, int src);
-std::array<std::array<int, V>, V> matrix_to_graph(std::vector<std::vector<int>> matrix);
+int shortest_path(const std::vector<std::vector<int>>& matrix, int src);
+const std::array<std::array<int, V>, V> matrix_to_graph(const std::vector<std::vector<int>>& matrix);
+bool check_size(std::vector<std::vector<int>> matrix);

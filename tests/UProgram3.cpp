@@ -1,5 +1,5 @@
 //compilation:
-//g++ -std=c++17 *.cpp -DBOOST_TEST_DYN_LINK -lboost_system -lboost_unit_test_framework -o UProgram1
+//g++ -std=c++17 *.cpp -DBOOST_TEST_DYN_LINK -lboost_system -lboost_unit_test_framework -o UProgram3
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE TestPrograms  
 #include <boost/test/unit_test.hpp>

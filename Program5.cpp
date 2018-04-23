@@ -7,7 +7,8 @@ using Matrix = vector<vector<int>>;//define a new type for matrices
     Find the cell with the minimum number of stones, from the set of cells not
     yet visited  
 
-    @param 
+    @param dist contains the minimum number of stones to go from source to vertex i 
+    @param is_visited contains whether vertex i is included in shortest path tree
     @return index of the cell having the minimum number of stones
 */
 int find_min_distance(int dist[], bool is_visited[], int V){
@@ -24,7 +25,7 @@ int find_min_distance(int dist[], bool is_visited[], int V){
 }
 
 /**
-    Generate a matrix n*m of integers (10<i<50)  
+    Generates a matrix n*m of integers (10<val<50)  
 
     @param  size of n, m
     @return matrix size n*m
@@ -42,8 +43,16 @@ const Matrix get_matrix(int n, int m){
     return matrix;
 }
 
-void print_matrix(const Matrix& matrix, int m, int n){
+/**
+    Prints a matrix n*m of integers (10<i<50)  
+
+    @param  size of n, m
+    @return 
+*/
+void print_matrix(const Matrix& matrix){
     
+    int m= matrix.size();
+    int n= matrix[0].size();
     for(int i = 0; i<m; i++){
         for(int j = 0; j<n; j++){
             cout << matrix[i][j] << " ";
@@ -58,10 +67,10 @@ void print_matrix(const Matrix& matrix, int m, int n){
     implementing Dijkstra's algorithm.
 
     @param Matrix representation of the maze.
-    @param Source
+    @param source 
     @return Minimum value of stones that was collected to get to the target
 */
-int shortest_path(Matrix matrix, int src){
+int shortest_path(const Matrix& matrix, int src){
 
 	/*
         Part 1: Transform the matrix to a graph of vertices, and assign weights
@@ -106,22 +115,22 @@ int shortest_path(Matrix matrix, int src){
 	for (int i = 0; i < V; i++)
 		dist[i] = INT_MAX, is_visited[i] = false;
 
-	// Distance of source vertex from itself is the number of stones of the first cell
+	//Distance of source vertex from itself is the number of stones of the first cell
 	dist[src] = graph[0][0];
 
 	//Find least number of stones path for all vertices
 	for(int count=0; count<V-1; count++){
-		// Get the index of the cell with the minimum number of stones from the cells that were not
-		// visited yet. u is always equal to the first cell in the first iteration.
+		//Get the index of the cell with the minimum number of stones from the cells that were not
+		//visited yet. u is always equal to the first cell in the first iteration.
 		int u = find_min_distance(dist, is_visited, V);
 
 		is_visited[u] = true;// Save the picked vertex as visited
 
-		// Update dist value of the adjacent cells to the picked cell.
+		//Update dist value of the adjacent cells to the picked cell.
 		for(int v=0; v<V; v++){
-		    // Update dist[v] only if is not in is_visited, there is a way from
-			// u to v (adjacents), and total number of stones from the first cell to v through u is
-			// smaller than current value of dist[v]
+		    //Update dist[v] only if is not in is_visited, there is a way from
+			//u to v (adjacents), and total number of stones from the first cell to v through u is
+			//smaller than current value of dist[v]
 			bool prd = !is_visited[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v];
 			if (prd)
 				dist[v] = dist[u] + graph[u][v];
@@ -129,30 +138,4 @@ int shortest_path(Matrix matrix, int src){
 	}
 
 	return dist[V-1];
-}
-
-int main() {
-
-    int n=2;
-    int m=2;
-    Matrix matrix = get_matrix(n,m);
-    /* test the 1st example */
-	Matrix test_matrix_a = {{1, 2, 2, 5, 4},
-					      {8, 1, 3, 5, 7},
-					      {2, 8, 4, 1, 8}};
-	/* test the 2nd example*/
-	Matrix test_matrix_b = {{1, 2, 2, 5, 4, 1},
-					      {8, 1, 3, 5, 7, 3},
-					      {2, 8, 4, 1, 8, 2},
-					      {5, 3, 1, 7, 8, 9}};
-	print_matrix(test_matrix_a, 3, 5);
-    cout << shortest_path(test_matrix_a, 0) << endl;
-    
-    print_matrix(test_matrix_b, 4, 6);
-    cout << shortest_path(test_matrix_b, 0) << endl;
-    
-    print_matrix(matrix, 2, 2);
-    cout << shortest_path(matrix, 0) << endl;
-	
-	return 0;
 }

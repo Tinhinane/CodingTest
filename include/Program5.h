@@ -16,6 +16,6 @@
 
 
 int find_min_distance(int dist[], bool is_visited[], int V);
-int shortest_path(std::vector<std::vector<int>> matrix, int src);
+int shortest_path(const std::vector<std::vector<int>>& matrix, int src);
 const std::vector<std::vector<int>> get_matrix(int n, int m);
-
+void print_matrix(const std::vector<std::vector<int>>& matrix);

@@ -8,16 +8,14 @@
 
 using namespace std;
 
-//Program 01
-BOOST_AUTO_TEST_CASE(test_total_on_a_checkerboard){
+BOOST_AUTO_TEST_CASE(test_eight_by_eight_checkerboard){
     vector<float> checkerboard(64);
     float expected = 1.84467441e+19;
     BOOST_CHECK_EQUAL(method_a(checkerboard),expected);
 }
 
-BOOST_AUTO_TEST_CASE(test_two){
-    //vector<float> checkerboard(16);
-    //float expected = 1.84467441e+19;
-    //BOOST_CHECK_EQUAL(method_a(checkerboard),expected);
+BOOST_AUTO_TEST_CASE(test_five_by_five_checkerboard){
+    vector<float> checkerboard(25);
+    float expected = 33554432;
+    BOOST_CHECK_EQUAL(method_a(checkerboard),expected);
 }
-

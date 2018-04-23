@@ -8,7 +8,8 @@ using Graph = array<array<int, V>, V>;//define a new type for graphs
     Find the cell with the minimum number of stones, from the set of cells not
     yet visited  
 
-    @param 
+    @param dist contains the minimum number of stones to go from source to vertex i 
+    @param is_visited contains whether vertex i is included in shortest path tree
     @return index of the cell having the minimum number of stones
 */
 int find_min_distance(int dist[], bool is_visited[]) {
@@ -31,7 +32,7 @@ int find_min_distance(int dist[], bool is_visited[]) {
     @param Matrix to be transformed to a graph.
     @return Graph representation of the matrix
 */
-Graph matrix_to_graph(Matrix matrix){
+const Graph matrix_to_graph(const Matrix& matrix){
 
     Graph graph;
 	//Initialization; assuming vertices are not connected to one another, assign 0
@@ -63,6 +64,20 @@ Graph matrix_to_graph(Matrix matrix){
 }
 
 /**
+    Checks whether a matrix is a 5 by 3 matrix
+
+    @param Matrix representation of the maze.
+    @return true if the matrix is a 5 by 3, else false
+*/
+bool check_size(Matrix matrix){
+    int row=matrix.size();
+    int col=matrix[0].size();
+    if(row!=ROW || col!=COL)
+        return false;
+    return true;
+}
+
+/**
     Finds the shortest path from a source to a target in a maze (2D matrix) by
     implementing Dijkstra's algorithm.
 
@@ -70,16 +85,20 @@ Graph matrix_to_graph(Matrix matrix){
     @param Source
     @return Minimum value of stones that was collected to get to the target
 */
-int shortest_path(Matrix matrix, int src) {
-
+int shortest_path(const Matrix& matrix, int src) {
     /*
-        Part 1: Transform the matrix to a graph of vertices, and assign weights
+        Part 1: Check maze size to double check it matches to the size specified. 
+    */
+    if(!check_size(matrix))
+        return -1;
+    /*
+        Part 2: Transform the matrix to a graph of vertices, and assign weights
         to edges. 
     */
 	Graph graph = matrix_to_graph(matrix);
 	
 	/*
-        Part 2: Calculate the shortest path from the source to the target 
+        Part 3: Calculate the shortest path from the source to the target 
         in the graph
     */
     //The array dist will save the minimum number of stones to go from source to i 
@@ -96,17 +115,17 @@ int shortest_path(Matrix matrix, int src) {
 
 	//Find least number of stones path for all vertices
 	for(int count=0; count<V-1; count++){
-		// Get the index of the cell with the minimum number of stones from the cells that were not
-		// visited yet. u is always equal to the first cell in the first iteration.
+		//Get the index of the cell with the minimum number of stones from the cells that were not
+		//visited yet. u is always equal to the first cell in the first iteration.
 		int u = find_min_distance(dist, is_visited);
 
 		is_visited[u] = true;// Save the picked vertex as visited
 
-		// Update dist value of the adjacent cells to the picked cell.
+		//Update dist value of the adjacent cells to the picked cell.
 		for(int v=0; v<V; v++){
-		    // Update dist[v] only if is not in is_visited, there is a way from
-			// u to v (adjacents), and total number of stones from the first cell to v through u is
-			// smaller than current value of dist[v]
+		    //Update dist[v] only if is not in is_visited, there is a way from
+			//u to v (adjacents), and total number of stones from the first cell to v through u is
+			//smaller than current value of dist[v]
 			bool prd = !is_visited[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v];
 			if (prd)
 				dist[v] = dist[u] + graph[u][v];
@@ -116,14 +135,4 @@ int shortest_path(Matrix matrix, int src) {
 	//The minimum number of collected stones to go from source to the target
 	//is saved in the last element of dist array
 	return dist[V-1];
-}
-
-int main() {
-	/* test the 1st example */
-	Matrix test_matrix = {{1, 2, 2, 5, 4},
-					      {8, 1, 3, 5, 7},
-					      {2, 8, 4, 1, 8}};
-    cout << shortest_path(test_matrix, 0);
-	
-	return 0;
 }
